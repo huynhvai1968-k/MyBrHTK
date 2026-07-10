@@ -1,0 +1,44 @@
+name: MyBrHTK
+description: A Flutter browser app PRO MAX
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  #  WebView (browser)
+  webview_flutter: ^4.7.0
+
+  #  video/audio control (optional)
+  video_player: ^2.8.2
+
+  #  check internet
+  connectivity_plus: ^6.0.3
+
+  #  pull to refresh
+  pull_to_refresh: ^2.0.0
+
+  #  open external apps
+  url_launcher: ^6.2.6
+
+  #  storage (cookies/cache nu cn)
+  shared_preferences: ^2.2.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  #  app icon
+  flutter_launcher_icons: ^0.13.1
+
+  #  splash screen
+  flutter_native_splash: ^2.4.0
+
+flutter:
+  uses-material-design: true
