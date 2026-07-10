@@ -1,40 +1,44 @@
-name: 🚀 Build APK Flutter
+name: Flutter Build APK
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:   # cho phép bấm chạy thủ công
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 📥 Lấy source code
-      - name: 📥 Checkout source
+      # 1. Lấy source code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 🐦 Cài Flutter
-      - name: 🐦 Setup Flutter
+      # 2. Cài Flutter
+      - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'   # ổn định
-          channel: stable
+          flutter-version: "3.22.0"
 
-      # 🔍 Kiểm tra môi trường
-      - name: 🔍 Flutter doctor
+      # 3. Kiểm tra môi trường
+      - name: Flutter doctor
         run: flutter doctor
 
-      # 📦 Cài dependencies
-      - name: 📦 Install dependencies
+      # 4. Cài dependencies
+      - name: Install dependencies
         run: flutter pub get
 
-      # ⚡ Build APK release
-      - name: ⚡ Build APK
-        run: flutter build apk --release
+      # 5. Build APK (PRO MAX)
+      - name: Build APK
+        run: flutter build apk --release --split-per-abi
 
-      # 📤 Upload APK
+      # 6. Upload APK
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: apk-release
+          path: build/app/outputs/flutter-apk/*.apk      # 📤 Upload APK
       - name: 📤 Upload APK
         uses: actions/upload-artifact@v4
         with:
