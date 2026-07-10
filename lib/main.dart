@@ -50,4 +50,4 @@ class _BrowserScreenState extends State<BrowserScreen> {
       ),
     );
   }
-}
+} 
