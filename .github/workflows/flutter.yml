@@ -1,1 +1,62 @@
+name: 🚀 Build APK (Flutter)
 
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:   # cho phép bấm nút run tay
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 📥 Lấy code
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      # ⚙️ Cài Flutter
+      - name: ⚙️ Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.22.0"
+          channel: stable
+
+      # 📦 Cache (build nhanh hơn)
+      - name: 📦 Cache Flutter
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.pub-cache
+            build
+          key: ${{ runner.os }}-flutter-${{ hashFiles('pubspec.yaml') }}
+
+      # 📦 Cài dependencies
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      # 🔍 Check lỗi trước khi build
+      - name: 🔍 Analyze project
+        run: flutter analyze
+
+      # 🏗️ Build APK release
+      - name: 🏗️ Build APK
+        run: flutter build apk --release
+
+      # 📤 Upload APK
+      - name: 📤 Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      # 🔥 (OPTION) Upload lên Release GitHub
+      - name: 🚀 Create Release APK
+        uses: softprops/action-gh-release@v1
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          name: 🚀 APK Build ${{ github.run_number }}
+          files: build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
