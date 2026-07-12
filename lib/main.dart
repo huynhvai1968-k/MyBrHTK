@@ -5,13 +5,8 @@ import 'package:flutter/services.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Fullscreen toàn bộ (ẩn status + navigation bar)
+  // Fullscreen
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-
-  // Chỉ cho phép xoay dọc (tránh crash video)
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
 
   runApp(const MyApp());
 }
@@ -35,6 +30,26 @@ class BrowserScreen extends StatefulWidget {
   State<BrowserScreen> createState() => _BrowserScreenState();
 }
 
+class _BrowserScreenState extends State<BrowserScreen> {
+  late final WebViewController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setMediaPlaybackRequiresUserGesture(false)
+      ..loadRequest(Uri.parse("https://google.com"));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: WebViewWidget(controller: controller),
+    );
+  }
+}
 class _BrowserScreenState extends State<BrowserScreen> {
   late final WebViewController controller;
 
