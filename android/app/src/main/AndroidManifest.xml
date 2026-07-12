@@ -1,1 +1,35 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mycompany.mybrowserhtk">
 
+    <!-- 🌐 Internet -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- (optional) network state -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+        android:label="MyBrowserHTK"
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true">
+
+        <!-- 🔥 Main Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:hardwareAccelerated="true"
+            android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|layoutDirection"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/LaunchTheme">
+
+            <!-- 🚀 App start -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
+
+    </application>
+</manifest>
