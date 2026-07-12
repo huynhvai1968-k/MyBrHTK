@@ -1,4 +1,4 @@
-name: Flutter Build APK
+name: Build APK
 
 on:
   push:
@@ -11,30 +11,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Lấy source code
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # 2. Cài Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.22.0"
+          flutter-version: '3.22.0'
 
-      # 3. Kiểm tra môi trường
-      - name: Flutter doctor
+      - name: Flutter Doctor
         run: flutter doctor
 
-      # 4. Cài dependencies
       - name: Install dependencies
         run: flutter pub get
 
-      # 5. Build APK (PRO MAX)
       - name: Build APK
-        run: flutter build apk --release --split-per-abi
+        run: flutter build apk --release
 
-      # 6. Upload APK
       - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: build/app/outputs/flutter-apk/app-release.apk      - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           name: apk-release
